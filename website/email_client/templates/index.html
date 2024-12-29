@@ -23,6 +23,47 @@
         .animate-fade-up {
             animation: fade-up 0.6s ease-out forwards;
         }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            padding: 2rem;
+        }
+
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mobile-menu-links a {
+            color: white;
+            font-size: 1.25rem;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .mobile-menu-links a:hover {
+            color: #8B5CF6;
+        }
     </style>
     <script>
         tailwind.config = {
@@ -57,6 +98,16 @@
                 console.error('Failed to copy text: ', err);
             });
         }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        }
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.remove('open');
+        }
     </script>
 </head>
 <body class="bg-dark text-white selection:bg-primary/30 selection:text-white">
@@ -75,7 +126,7 @@
                     </div>
                     <h1 class="text-xl font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">GetSetDeployed</h1>
                 </div>
-                <div class="flex items-center gap-8">
+                <div class="hidden md:flex items-center gap-8">
                     <a href="#documentation" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Documentation</a>
                     <a href="#example" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Examples</a>
                     <a href="#features" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Features</a>
@@ -83,9 +134,34 @@
                         GetSetDeployed.com
                     </a>
                 </div>
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-white focus:outline-none">
+                        <i class="ri-menu-line text-2xl"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="mobile-menu-content">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">GetSetDeployed</h1>
+                <button onclick="closeMobileMenu()" class="text-white focus:outline-none">
+                    <i class="ri-close-line text-2xl"></i>
+                </button>
+            </div>
+            <div class="mobile-menu-links">
+                <a href="#documentation" onclick="closeMobileMenu()">Documentation</a>
+                <a href="#example" onclick="closeMobileMenu()">Examples</a>
+                <a href="#features" onclick="closeMobileMenu()">Features</a>
+                <a href="https://www.getsetdeployed.com" class="px-4 py-2 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg text-sm font-medium transition-all transform hover:scale-105" onclick="closeMobileMenu()">
+                    GetSetDeployed.com
+                </a>
+            </div>
+        </div>
+    </div>
 
     <header class="relative pt-32 pb-24 px-6 overflow-hidden">
         <div class="container mx-auto text-center max-w-3xl">
@@ -95,7 +171,7 @@
                 </span>
             </div>
             <h1 class="text-5xl sm:text-6xl font-bold mb-8 leading-tight">
-                Send Emails with 
+                Send Emails with
                 <span class="relative">
                     <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                         Confidence
@@ -177,30 +253,30 @@
         </section>
 
         <section id="example">
-    <div class="max-w-4xl mx-auto">
-        <div class="flex items-center gap-4 mb-12">
-            <div class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center">
-                <i class="ri-code-line text-2xl text-secondary"></i>
-            </div>
-            <div>
-                <h2 class="text-3xl font-bold">Example Usage</h2>
-                <p class="text-gray-400 mt-1">Ready-to-use code samples</p>
-            </div>
-        </div>
-        
-        <div class="space-y-8">
-            <!-- cURL Example -->
-            <div class="bg-white/5 backdrop-blur p-8 rounded-2xl border border-white/10">
-                <div class="flex justify-between items-start mb-6">
-                    <h3 class="text-xl font-semibold text-secondary flex items-center gap-2">
-                        <i class="ri-terminal-line"></i> cURL Example
-                    </h3>
-                    <button onclick="copyToClipboard('curl-example')" class="text-gray-400 hover:text-white transition-colors px-3 py-1 rounded-lg bg-white/5 text-sm flex items-center gap-1">
-                        <i class="ri-file-copy-line"></i>
-                        Copy
-                    </button>
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center gap-4 mb-12">
+                    <div class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center">
+                        <i class="ri-code-line text-2xl text-secondary"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold">Example Usage</h2>
+                        <p class="text-gray-400 mt-1">Ready-to-use code samples</p>
+                    </div>
                 </div>
-                <pre class="bg-black/50 p-6 rounded-xl overflow-x-auto">
+
+                <div class="space-y-8">
+                    <!-- cURL Example -->
+                    <div class="bg-white/5 backdrop-blur p-8 rounded-2xl border border-white/10">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-xl font-semibold text-secondary flex items-center gap-2">
+                                <i class="ri-terminal-line"></i> cURL Example
+                            </h3>
+                            <button onclick="copyToClipboard('curl-example')" class="text-gray-400 hover:text-white transition-colors px-3 py-1 rounded-lg bg-white/5 text-sm flex items-center gap-1">
+                                <i class="ri-file-copy-line"></i>
+                                Copy
+                            </button>
+                        </div>
+                        <pre class="bg-black/50 p-6 rounded-xl overflow-x-auto">
 <code id="curl-example" class="language-bash">curl -X POST https://email.getsetdeployed.com/send \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -215,20 +291,20 @@
     "email_host_user": "your-email@example.com",
     "email_host_password": "your-password"
 }'</code></pre>
-            </div>
+                    </div>
 
-            <!-- React Example -->
-            <div class="bg-white/5 backdrop-blur p-8 rounded-2xl border border-white/10">
-                <div class="flex justify-between items-start mb-6">
-                    <h3 class="text-xl font-semibold text-secondary flex items-center gap-2">
-                        <i class="ri-reactjs-line"></i> React Example
-                    </h3>
-                    <button onclick="copyToClipboard('react-example')" class="text-gray-400 hover:text-white transition-colors px-3 py-1 rounded-lg bg-white/5 text-sm flex items-center gap-1">
-                        <i class="ri-file-copy-line"></i>
-                        Copy
-                    </button>
-                </div>
-                <pre class="bg-black/50 p-6 rounded-xl overflow-x-auto">
+                    <!-- React Example -->
+                    <div class="bg-white/5 backdrop-blur p-8 rounded-2xl border border-white/10">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-xl font-semibold text-secondary flex items-center gap-2">
+                                <i class="ri-reactjs-line"></i> React Example
+                            </h3>
+                            <button onclick="copyToClipboard('react-example')" class="text-gray-400 hover:text-white transition-colors px-3 py-1 rounded-lg bg-white/5 text-sm flex items-center gap-1">
+                                <i class="ri-file-copy-line"></i>
+                                Copy
+                            </button>
+                        </div>
+                        <pre class="bg-black/50 p-6 rounded-xl overflow-x-auto">
 <code id="react-example" class="language-javascript">import axios from "axios";
 
 const sendEmail = async () => {
@@ -252,20 +328,20 @@ const sendEmail = async () => {
 };
 
 sendEmail();</code></pre>
-            </div>
+                    </div>
 
-            <!-- Python Example -->
-            <div class="bg-white/5 backdrop-blur p-8 rounded-2xl border border-white/10">
-                <div class="flex justify-between items-start mb-6">
-                    <h3 class="text-xl font-semibold text-secondary flex items-center gap-2">
-                        <i class="ri-python-line"></i> Python Example
-                    </h3>
-                    <button onclick="copyToClipboard('python-example')" class="text-gray-400 hover:text-white transition-colors px-3 py-1 rounded-lg bg-white/5 text-sm flex items-center gap-1">
-                        <i class="ri-file-copy-line"></i>
-                        Copy
-                    </button>
-                </div>
-                <pre class="bg-black/50 p-6 rounded-xl overflow-x-auto">
+                    <!-- Python Example -->
+                    <div class="bg-white/5 backdrop-blur p-8 rounded-2xl border border-white/10">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-xl font-semibold text-secondary flex items-center gap-2">
+                                <i class="ri-python-line"></i> Python Example
+                            </h3>
+                            <button onclick="copyToClipboard('python-example')" class="text-gray-400 hover:text-white transition-colors px-3 py-1 rounded-lg bg-white/5 text-sm flex items-center gap-1">
+                                <i class="ri-file-copy-line"></i>
+                                Copy
+                            </button>
+                        </div>
+                        <pre class="bg-black/50 p-6 rounded-xl overflow-x-auto">
 <code id="python-example" class="language-python">import requests
 
 url = "https://email.getsetdeployed.com/send"
@@ -289,10 +365,10 @@ if response.status_code == 200:
     print("Email sent successfully:", response.json())
 else:
     print("Error sending email:", response.status_code, response.text)</code></pre>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
         <section id="features">
             <div class="max-w-4xl mx-auto">
@@ -305,7 +381,7 @@ else:
                         <p class="text-gray-400 mt-1">A few things you can do with GetSetDeployed</p>
                     </div>
                 </div>
-                
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                     <div class="bg-white/5 backdrop-blur p-8 rounded-2xl border border-white/10">
                         <h3 class="text-xl font-semibold text-accent">Reliable Delivery</h3>
@@ -319,32 +395,35 @@ else:
                 </div>
             </div>
         </section>
-<!-- Contact Us Section -->
-<section id="contact" class="bg-[#8B05FF] py-16 px-8">
+
+        <!-- Contact Us Section -->
+<section id="contact" class="py-16 px-8">
     <div class="max-w-7xl mx-auto text-center text-black">
-      <!-- Section Title -->
-      <h2 class="text-4xl font-extrabold mb-4 text-white">
-        Hire Us!
-      </h2>
-      <p class="text-lg mb-8 text-white opacity-80">
-        Looking for top-notch services? Get in touch and let’s make it happen!
-      </p>
-      <!-- Buttons -->
-      <div class="flex justify-center gap-6">
-        <!-- Email Button -->
-        <a href="mailto:mail@getsetdeployed.com" class="bg-[#E6DAFF] text-black font-semibold py-3 px-10 rounded-full transform transition-all hover:scale-105 hover:bg-[#8B05FF] hover:text-white shadow-xl">
-          Send Us an Email
-        </a>
-        <!-- Phone Number Button -->
-        <a href="tel:+91 9875609901" class="bg-[#FF6F61] text-white font-semibold py-3 px-10 rounded-full transform transition-all hover:scale-105 hover:bg-[#D05D51] shadow-xl">
-          Call Us: +91 9875609901
-        </a>
-      </div>
+        <!-- Section Title -->
+        <h2 class="text-4xl font-extrabold mb-4 text-white">
+            Hire Us!
+        </h2>
+        <p class="text-lg mb-8 text-white opacity-80">
+            Looking for top-notch services? Get in touch and let’s make it happen!
+        </p>
+        <!-- Glass Effect Container -->
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-lg mx-auto max-w-md">
+            <!-- Buttons -->
+            <div class="flex flex-col gap-4">
+                <!-- Email Button -->
+                <a href="mailto:mail@getsetdeployed.com" class="bg-[#E6DAFF] text-black font-semibold py-3 px-6 rounded-full transform transition-all hover:scale-105 hover:bg-[#8B05FF] hover:text-white shadow-xl text-center">
+                    Send Us an Email
+                </a>
+                <!-- Phone Number Button -->
+                <a href="tel:+91 9875609901" class="bg-[#FF6F61] text-white font-semibold py-3 px-6 rounded-full transform transition-all hover:scale-105 hover:bg-[#D05D51] shadow-xl text-center">
+                    Call Us: +91 9875609901
+                </a>
+            </div>
+        </div>
     </div>
 </section>
 
-        
-      
+
     </main>
 </body>
 <footer class="bg-dark/80 text-white py-8 mt-32">
@@ -359,3 +438,4 @@ else:
 </script>
 
 </html>
+
