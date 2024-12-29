@@ -144,24 +144,27 @@
     </nav>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="mobile-menu">
-        <div class="mobile-menu-content">
-            <div class="flex justify-between items-center">
-                <h1 class="text-2xl font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">GetSetDeployed</h1>
-                <button onclick="closeMobileMenu()" class="text-white focus:outline-none">
-                    <i class="ri-close-line text-2xl"></i>
-                </button>
-            </div>
-            <div class="mobile-menu-links">
-                <a href="#documentation" onclick="closeMobileMenu()">Documentation</a>
-                <a href="#example" onclick="closeMobileMenu()">Examples</a>
-                <a href="#features" onclick="closeMobileMenu()">Features</a>
-                <a href="https://www.getsetdeployed.com" class="px-4 py-2 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg text-sm font-medium transition-all transform hover:scale-105" onclick="closeMobileMenu()">
-                    GetSetDeployed.com
-                </a>
-            </div>
+<div id="mobile-menu" class="mobile-menu">
+    <div class="mobile-menu-content h-full flex flex-col justify-between">
+        <div class="flex justify-between items-center px-6 py-4">
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">GetSetDeployed</h1>
+            <button onclick="closeMobileMenu()" class="text-white focus:outline-none">
+                <i class="ri-close-line text-2xl"></i>
+            </button>
+        </div>
+        <div class="mobile-menu-links flex flex-col items-start justify-center flex-grow px-6">
+            <a href="#documentation" onclick="closeMobileMenu()" class="text-2xl font-semibold text-white mb-6">Documentation</a>
+            <a href="#example" onclick="closeMobileMenu()" class="text-2xl font-semibold text-white mb-6">Examples</a>
+            <a href="#features" onclick="closeMobileMenu()" class="text-2xl font-semibold text-white mb-6">Features</a>
+        </div>
+        <div class="flex justify-center items-center pb-6">
+            <a href="https://www.getsetdeployed.com" class="px-4 py-2 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg text-sm font-medium transition-all transform hover:scale-105" onclick="closeMobileMenu()">
+                GetSetDeployed.com
+            </a>
         </div>
     </div>
+</div>
+
 
     <header class="relative pt-32 pb-24 px-6 overflow-hidden">
         <div class="container mx-auto text-center max-w-3xl">
