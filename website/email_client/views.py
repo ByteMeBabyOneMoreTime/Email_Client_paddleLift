@@ -8,39 +8,39 @@ from django.core.mail import EmailMessage, get_connection
 from django.shortcuts import render
 
 class SendEmailView(APIView):
-    def test_smtp_connection(self, smtp_host, smtp_port, use_ssl, use_tls, email_host_user, email_host_password):
-        """Test SMTP connection before attempting to send email"""
-        try:
-            # First, test if the port is even reachable
-            sock = socket.create_connection((smtp_host, smtp_port), timeout=10)
-            sock.close()
-
-            # Now test SMTP connection
-            if use_ssl and smtp_port == 465:
-                server = SMTP_SSL(smtp_host, smtp_port, timeout=10)
-            elif use_tls and smtp_port == 587:
-                server = SMTP(smtp_host, smtp_port, timeout=10)
-                server.starttls()
-            else:
-                return False, "Invalid SSL/TLS configuration. Use SSL with port 465 or TLS with port 587."
-
-            server.login(email_host_user, email_host_password)
-            server.quit()
-            return True, "Connection successful"
-
-        except socket.timeout:
-            return False, "Connection timed out. Please check if the SMTP host is correct and accessible."
-        except socket.gaierror:
-            return False, "Could not resolve SMTP host. Please check the hostname."
-        except ConnectionRefusedError:
-            return False, "Connection refused. Please check if the SMTP port is correct and not blocked."
-        except SMTPAuthenticationError:
-            return False, "Invalid SMTP credentials."
-        except SMTPException as e:
-            return False, f"SMTP Error: {str(e)}"
-        except Exception as e:
-            return False, f"Error: {str(e)}"
-
+    # def test_smtp_connection(self, smtp_host, smtp_port, use_ssl, use_tls, email_host_user, email_host_password):
+    #     """Test SMTP connection before attempting to send email"""
+    #     try:
+    #         # First, test if the port is even reachable
+    #         sock = socket.create_connection((smtp_host, smtp_port), timeout=10)
+    #         sock.close()
+    #
+    #         # Now test SMTP connection
+    #         if use_ssl and smtp_port == 465:
+    #             server = SMTP_SSL(smtp_host, smtp_port, timeout=10)
+    #         elif use_tls and smtp_port == 587:
+    #             server = SMTP(smtp_host, smtp_port, timeout=10)
+    #             server.starttls()
+    #         else:
+    #             return False, "Invalid SSL/TLS configuration. Use SSL with port 465 or TLS with port 587."
+    #
+    #         server.login(email_host_user, email_host_password)
+    #         server.quit()
+    #         return True, "Connection successful"
+    #
+    #     except socket.timeout:
+    #         return False, "Connection timed out. Please check if the SMTP host is correct and accessible."
+    #     except socket.gaierror:
+    #         return False, "Could not resolve SMTP host. Please check the hostname."
+    #     except ConnectionRefusedError:
+    #         return False, "Connection refused. Please check if the SMTP port is correct and not blocked."
+    #     except SMTPAuthenticationError:
+    #         return False, "Invalid SMTP credentials."
+    #     except SMTPException as e:
+    #         return False, f"SMTP Error: {str(e)}"
+    #     except Exception as e:
+    #         return False, f"Error: {str(e)}"
+    #
     def post(self, request):
         try:
             data = request.data
