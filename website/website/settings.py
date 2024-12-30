@@ -14,13 +14,10 @@ import os
 
 load_dotenv()  # This will load environment variables from a .env file
 
-
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -32,7 +29,6 @@ SECRET_KEY = 'django-insecure-seplha@i0&f@u$(08r9ezc*ttg)wgt132cz-b65zpf2rb+a4s-
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -51,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,10 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware', #whitenoise middleware1
-    'whitenoise.middleware.WhiteNoiseMiddleware', #whitenoise middleware2
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'your_project.middleware.NoRedirectOnOptionsMiddleware',  # Add this line
 ]
 
 ROOT_URLCONF = 'website.urls'
@@ -84,16 +79,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'website.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 import dj_database_url
 
@@ -104,8 +91,6 @@ DATABASES = {
         ssl_require=True
     )
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -125,7 +110,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -136,7 +120,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -155,7 +138,6 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False  # Optional, depending on the provider
 EMAIL_TIMEOUT = 10  # Timeout for email connections (optional)
 
-
 # JET_DEFAULT_THEME = 'light-violet'  # Available themes: 'default', 'light-gray', 'light-green', 'light-violet', 'light-blue'
 # Enable Gzip compression
 WHITENOISE_USE_FINDERS = True
@@ -163,8 +145,6 @@ WHITENOISE_USE_FINDERS = True
 # Enable WhiteNoise's built-in static file compression (for .gzip, .br files)
 WHITENOISE_MANIFEST_STRICT = False
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = False  # Set to True if you want to allow all origins
