@@ -1,10 +1,10 @@
-from django.core.mail import EmailMessage, get_connection
-from smtplib import SMTP, SMTPException, SMTPAuthenticationError, SMTP_SSL
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Client_Registration, Email_log
 import socket
+from smtplib import SMTP, SMTPException, SMTPAuthenticationError, SMTP_SSL
+from django.core.mail import EmailMessage, get_connection
 from django.shortcuts import render
 
 class SendEmailView(APIView):
@@ -82,7 +82,7 @@ class SendEmailView(APIView):
             # Test SMTP connection first
             use_tls = data.get('use_tls', True)
             use_ssl = data.get('use_ssl', False)
-            
+
             connection_success, connection_message = self.test_smtp_connection(
                 required_fields['smtp_host'],
                 required_fields['smtp_port'],
@@ -127,6 +127,13 @@ class SendEmailView(APIView):
                 {"error": f"Failed to send email: {str(e)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-        
+
+    def options(self, request, *args, **kwargs):
+        response = Response({}, status=status.HTTP_204_NO_CONTENT)
+        response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response['Access-Control-Allow-Headers'] = 'Content-Type'
+        return response
+
 def home(request):
     return render(request, 'index.html')
