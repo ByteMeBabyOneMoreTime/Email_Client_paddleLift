@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'email_client',
     'cron',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware', #whitenoise middleware1
     'whitenoise.middleware.WhiteNoiseMiddleware', #whitenoise middleware2
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'website.urls'
@@ -160,3 +163,7 @@ WHITENOISE_USE_FINDERS = True
 # Enable WhiteNoise's built-in static file compression (for .gzip, .br files)
 WHITENOISE_MANIFEST_STRICT = False
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+# CORS Handling     
+CORS_ALLOW_ALL_ORIGINS = True
