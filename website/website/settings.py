@@ -150,13 +150,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CORS_ALLOW_ALL_ORIGINS = True  # Set to True if you want to allow all origins
 CORS_ALLOW_CREDENTIALS = True  
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "https://getsetdeployed.com",
-    "https://www.getsetdeployed.com",
-    "https://email.getsetdeployed.com",
-]
-
 CORS_ALLOW_METHODS = [
     "DELETE",
     "GET",
