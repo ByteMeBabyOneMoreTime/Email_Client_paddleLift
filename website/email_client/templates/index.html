@@ -719,9 +719,9 @@ else:
                     <div>
                       <h3 class="font-medium text-lg mb-1">Email</h3>
                       <a
-                        href="mailto:mail@getsetdeployed.com"
+                        href="mailto:snehasish@getsetdeployed.com"
                         class="text-gray-400 hover:text-primary"
-                        >mail@getsetdeployed.com</a
+                        >snehasish@getsetdeployed.com</a
                       >
                     </div>
                   </div>
@@ -793,58 +793,52 @@ else:
     hljs.highlightAll();
 
     // Set current year
-    document.getElementById("currentYear").textContent =
-      new Date().getFullYear();
+       document.getElementById("currentYear").textContent = new Date().getFullYear();
 
     // Handle contact form submission
-    document
-      .getElementById("contactForm")
-      .addEventListener("submit", async (e) => {
-        e.preventDefault();
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-        const formData = {
-          id: "6ab3723b-4544-4e0b-8148-12a91865d2b3",
-          subject: "New Contact Form Submission",
-          body: `
+      const formData = {
+        id: "6ab3723b-4544-4e0b-8148-12a91865d2b3",
+        subject: "New Contact Form Submission",
+        body: `
 <h2>New Contact Form Submission</h2>
 <p><strong>Name:</strong> ${e.target.name.value}</p>
 <p><strong>Email:</strong> ${e.target.email.value}</p>
 <p><strong>Message:</strong> ${e.target.message.value}</p>
 `,
-          recipient_list: [
-            "mandalsneh97@gmail.com",
-            "mayankcryptobyte@gmail.com",
-          ],
-          smtp_host: "smtp.example.com",
-          smtp_port: 587,
-          use_tls: true,
-          use_ssl: false,
-          email_host_user: "getsetdeployed@gmail.com",
-          email_host_password: "smhawqdpzvyyefji",
-        };
+        recipient_list: [
+          "mandalsneh97@gmail.com",
+          "mayankcryptobyte@gmail.com",
+        ],
+        smtp_host: "smtp.example.com",
+        smtp_port: 587,
+        use_tls: true,
+        use_ssl: false,
+        email_host_user: "getsetdeployed@gmail.com",
+        email_host_password: "smhawqdpzvyyefji",
+      };
 
-        try {
-          const response = await fetch(
-            "https://email-client-paddlelift.onrender.com/send/",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(formData),
-            }
-          );
+      try {
+        const response = await fetch("https://email-client-paddlelift.onrender.com/send/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
 
-          if (response.ok) {
-            alert("Message sent successfully!");
-            e.target.reset();
-          } else {
-            throw new Error("Failed to send message");
-          }
-        } catch (error) {
-          alert("Error sending message. Please try again later.");
-          console.error("Error:", error);
+        if (response.ok) {
+          alert("Message sent successfully!");
+          e.target.reset();
+        } else {
+          throw new Error("Failed to send message");
         }
-      });
+      } catch (error) {
+        alert("Error sending message. Please try again later.");
+        console.error("Error:", error);
+      }
+    });
   </script>
 </html>
