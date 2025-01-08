@@ -104,6 +104,9 @@ class SendEmailView(APIView):
                 use_tls=use_tls,
                 use_ssl=use_ssl,
             )
+            
+            # Handling External File
+            uploaded_file = request.FILES.get('file')
 
             # Create and send email
             email = EmailMessage(
@@ -114,6 +117,15 @@ class SendEmailView(APIView):
                 connection=connection,
             )
             email.content_subtype = "html"
+
+            # Attach the file without saving it to the server
+            if uploaded_file:
+                email.attach(
+                    uploaded_file.name,  # Name of the file
+                    uploaded_file.read(),  # File content
+                    uploaded_file.content_type,  # MIME type (e.g., 'application/pdf', 'image/jpeg')
+                )
+
             email.send(fail_silently=False)
 
             # Log success
