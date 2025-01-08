@@ -6,6 +6,9 @@ import socket
 from smtplib import SMTP, SMTPException, SMTPAuthenticationError, SMTP_SSL
 from django.core.mail import EmailMessage, get_connection
 from django.shortcuts import render
+import base64
+import tempfile
+import os
 
 class SendEmailView(APIView):
     def test_smtp_connection(self, smtp_host, smtp_port, use_ssl, use_tls, email_host_user, email_host_password):
@@ -41,7 +44,49 @@ class SendEmailView(APIView):
         except Exception as e:
             return False, f"Error: {str(e)}"
 
+    def handle_attachments(self, email_message, attachments):
+        """Process and add attachments to the email message"""
+        temp_files = []
+        try:
+            for attachment in attachments:
+                # Extract file information
+                filename = attachment.get('filename')
+                content = attachment.get('content')  # Base64 encoded content
+                content_type = attachment.get('content_type', '')
+
+                if not filename or not content:
+                    continue
+
+                # Decode base64 content
+                try:
+                    file_content = base64.b64decode(content)
+                except Exception as e:
+                    raise ValueError(f"Invalid base64 content for file {filename}: {str(e)}")
+
+                # Create temporary file
+                temp_file = tempfile.NamedTemporaryFile(delete=False)
+                temp_files.append(temp_file.name)
+                
+                # Write content to temporary file
+                with open(temp_file.name, 'wb') as f:
+                    f.write(file_content)
+
+                # Attach file to email
+                email_message.attach_file(temp_file.name, content_type)
+
+        except Exception as e:
+            raise Exception(f"Error processing attachments: {str(e)}")
+        
+        finally:
+            # Clean up temporary files
+            for temp_file in temp_files:
+                try:
+                    os.unlink(temp_file)
+                except:
+                    pass
+
     def post(self, request):
+        temp_files = []
         try:
             data = request.data
 
@@ -104,11 +149,8 @@ class SendEmailView(APIView):
                 use_tls=use_tls,
                 use_ssl=use_ssl,
             )
-            
-            # Handling External File
-            uploaded_file = request.FILES.get('file')
 
-            # Create and send email
+            # Create email message
             email = EmailMessage(
                 subject=required_fields['subject'],
                 body=required_fields['body'],
@@ -118,14 +160,12 @@ class SendEmailView(APIView):
             )
             email.content_subtype = "html"
 
-            # Attach the file without saving it to the server
-            if uploaded_file:
-                email.attach(
-                    uploaded_file.name,  # Name of the file
-                    uploaded_file.read(),  # File content
-                    uploaded_file.content_type,  # MIME type (e.g., 'application/pdf', 'image/jpeg')
-                )
+            # Handle attachments if present
+            attachments = data.get('attachments', [])
+            if attachments:
+                self.handle_attachments(email, attachments)
 
+            # Send email
             email.send(fail_silently=False)
 
             # Log success

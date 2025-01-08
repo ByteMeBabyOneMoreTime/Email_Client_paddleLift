@@ -319,16 +319,25 @@
               </div>
               <pre class="bg-black/50 p-6 rounded-xl overflow-x-auto">
 <code id="request-body" class="language-json">{
-    "id": "string",
-    "subject": "string",
-    "body": "string (HTML supported)",
-    "recipient_list": ["email1@example.com", "email2@example.com"],
+  {
+    "id": "your_client_id",
+    "subject": "Email Subject",
+    "body": "Email Body",
+    "recipient_list": ["recipient@example.com"],
     "smtp_host": "smtp.example.com",
     "smtp_port": 587,
+    "email_host_user": "your_email@example.com",
+    "email_host_password": "your_password",
     "use_tls": true,
     "use_ssl": false,
-    "email_host_user": "your-email@example.com",
-    "email_host_password": "your-password"
+    "attachments": [
+      {
+        "filename": "document.pdf",
+        "content": "base64_encoded_content_here",
+        "content_type": "application/pdf"
+      }
+    ]
+  }
 }</code></pre>
             </div>
           </div>
@@ -338,8 +347,7 @@
       <section id="example">
         <div class="max-w-4xl mx-auto">
           <div class="flex items-center gap-4 mb-12">
-            <div
-              class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center">
+            <div class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center">
               <i class="ri-code-line text-2xl text-secondary"></i>
             </div>
             <div>
@@ -347,125 +355,158 @@
               <p class="text-gray-400 mt-1">Ready-to-use code samples</p>
             </div>
           </div>
-
+      
           <div class="space-y-8">
             <!-- cURL Example -->
-            <div
-              class="bg-white/5 backdrop-blur p-8 rounded-2xl border border-white/10">
+            <div class="bg-white/5 backdrop-blur p-8 rounded-2xl border border-white/10">
               <div class="flex justify-between items-start mb-6">
-                <h3
-                  class="text-xl font-semibold text-secondary flex items-center gap-2">
+                <h3 class="text-xl font-semibold text-secondary flex items-center gap-2">
                   <i class="ri-terminal-line"></i> cURL Example
                 </h3>
-                <button
-                  onclick="copyToClipboard('curl-example')"
-                  class="text-gray-400 hover:text-white transition-colors px-3 py-1 rounded-lg bg-white/5 text-sm flex items-center gap-1">
+                <button onclick="copyToClipboard('curl-example')" class="text-gray-400 hover:text-white transition-colors px-3 py-1 rounded-lg bg-white/5 text-sm flex items-center gap-1">
                   <i class="ri-file-copy-line"></i>
                   Copy
                 </button>
               </div>
               <pre class="bg-black/50 p-6 rounded-xl overflow-x-auto">
-<code id="curl-example" class="language-bash">curl -X POST https://email.getsetdeployed.com/send \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "id": "Id You Get From GETSETDEPLOYED (Contact Us for New ids)",
-    "subject": "Test Email",
-    "body": "<p>Hello, World!</p>",
-    "recipient_list": ["recipient@example.com"],
-    "smtp_host": "smtp.example.com",
-    "smtp_port": 587,
-    "use_tls": true,
-    "use_ssl": false,
-    "email_host_user": "your-email@example.com",
-    "email_host_password": "your-password"
-}'</code></pre>
+      <code id="curl-example" class="language-bash">curl -X POST https://email.getsetdeployed.com/send \
+        -H "Content-Type: application/json" \
+        -d '{
+          "id": "Id You Get From GETSETDEPLOYED (Contact Us for New ids)",
+          "subject": "Test Email",
+          "body": "<p>Hello, World!</p>",
+          "recipient_list": ["recipient@example.com"],
+          "smtp_host": "smtp.example.com",
+          "smtp_port": 587,
+          "email_host_user": "your-email@example.com",
+          "email_host_password": "your-password",
+          "use_tls": true,
+          "use_ssl": false,
+          "attachments": [
+            {
+              "filename": "document.pdf",
+              "content": "base64_encoded_content_here",
+              "content_type": "application/pdf"
+            }
+          ]
+      }'</code></pre>
             </div>
-
+      
             <!-- React Example -->
-            <div
-              class="bg-white/5 backdrop-blur p-8 rounded-2xl border border-white/10">
+            <div class="bg-white/5 backdrop-blur p-8 rounded-2xl border border-white/10">
               <div class="flex justify-between items-start mb-6">
-                <h3
-                  class="text-xl font-semibold text-secondary flex items-center gap-2">
+                <h3 class="text-xl font-semibold text-secondary flex items-center gap-2">
                   <i class="ri-reactjs-line"></i> React Example
                 </h3>
-                <button
-                  onclick="copyToClipboard('react-example')"
-                  class="text-gray-400 hover:text-white transition-colors px-3 py-1 rounded-lg bg-white/5 text-sm flex items-center gap-1">
+                <button onclick="copyToClipboard('react-example')" class="text-gray-400 hover:text-white transition-colors px-3 py-1 rounded-lg bg-white/5 text-sm flex items-center gap-1">
                   <i class="ri-file-copy-line"></i>
                   Copy
                 </button>
               </div>
               <pre class="bg-black/50 p-6 rounded-xl overflow-x-auto">
-<code id="react-example" class="language-javascript">import axios from "axios";
-
-const sendEmail = async () => {
-  try {
-    const response = await axios.post("https://email.getsetdeployed.com/send", {
-      id: "Id You Get From GETSETDEPLOYED (Contact Us for New ids)",
-      subject: "Test Email",
-      body: "<p>Hello, World!</p>",
-      recipient_list: ["recipient@example.com"],
-      smtp_host: "smtp.example.com",
-      smtp_port: 587,
-      use_tls: true,
-      use_ssl: false,
-      email_host_user: "your-email@example.com",
-      email_host_password: "your-password",
-    });
-    console.log("Email sent successfully:", response.data);
-  } catch (error) {
-    console.error("Error sending email:", error);
-  }
-};
-
-sendEmail();</code></pre>
+      <code id="react-example" class="language-javascript">import axios from "axios";
+      
+      const sendEmail = async () => {
+        try {
+          // Function to convert file to base64
+          const fileToBase64 = (file) => {
+            return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result.split(',')[1]);
+              reader.onerror = reject;
+              reader.readAsDataURL(file);
+            });
+          };
+      
+          // Example: Handle file input
+          const fileInput = document.querySelector('input[type="file"]');
+          const file = fileInput.files[0];
+          const base64Content = await fileToBase64(file);
+      
+          const response = await axios.post("https://email.getsetdeployed.com/send", {
+            id: "Id You Get From GETSETDEPLOYED (Contact Us for New ids)",
+            subject: "Test Email",
+            body: "<p>Hello, World!</p>",
+            recipient_list: ["recipient@example.com"],
+            smtp_host: "smtp.example.com",
+            smtp_port: 587,
+            email_host_user: "your-email@example.com",
+            email_host_password: "your-password",
+            use_tls: true,
+            use_ssl: false,
+            attachments: [
+              {
+                filename: file.name,
+                content: base64Content,
+                content_type: file.type
+              }
+            ]
+          });
+          console.log("Email sent successfully:", response.data);
+        } catch (error) {
+          console.error("Error sending email:", error);
+        }
+      };
+      
+      sendEmail();</code></pre>
             </div>
-
+      
             <!-- Python Example -->
-            <div
-              class="bg-white/5 backdrop-blur p-8 rounded-2xl border border-white/10">
+            <div class="bg-white/5 backdrop-blur p-8 rounded-2xl border border-white/10">
               <div class="flex justify-between items-start mb-6">
-                <h3
-                  class="text-xl font-semibold text-secondary flex items-center gap-2">
+                <h3 class="text-xl font-semibold text-secondary flex items-center gap-2">
                   <i class="ri-python-line"></i> Python Example
                 </h3>
-                <button
-                  onclick="copyToClipboard('python-example')"
-                  class="text-gray-400 hover:text-white transition-colors px-3 py-1 rounded-lg bg-white/5 text-sm flex items-center gap-1">
+                <button onclick="copyToClipboard('python-example')" class="text-gray-400 hover:text-white transition-colors px-3 py-1 rounded-lg bg-white/5 text-sm flex items-center gap-1">
                   <i class="ri-file-copy-line"></i>
                   Copy
                 </button>
               </div>
               <pre class="bg-black/50 p-6 rounded-xl overflow-x-auto">
-<code id="python-example" class="language-python">import requests
-
-url = "https://email.getsetdeployed.com/send"
-
-payload = {
-    "id": "Id You Get From GETSETDEPLOYED (Contact Us for New ids)",
-    "subject": "Test Email",
-    "body": "<p>Hello, World!</p>",
-    "recipient_list": ["recipient@example.com"],
-    "smtp_host": "smtp.example.com",
-    "smtp_port": 587,
-    "use_tls": True,
-    "use_ssl": False,
-    "email_host_user": "your-email@example.com",
-    "email_host_password": "your-password"
-}
-
-response = requests.post(url, json=payload)
-
-if response.status_code == 200:
-    print("Email sent successfully:", response.json())
-else:
-    print("Error sending email:", response.status_code, response.text)</code></pre>
+      <code id="python-example" class="language-python">import requests
+      import base64
+      
+      url = "https://email.getsetdeployed.com/send"
+      
+      # Function to encode file to base64
+      def encode_file(file_path):
+          with open(file_path, 'rb') as file:
+              return base64.b64encode(file.read()).decode('utf-8')
+      
+      # Example file attachment
+      file_path = "path/to/your/document.pdf"
+      base64_content = encode_file(file_path)
+      
+      payload = {
+          "id": "Id You Get From GETSETDEPLOYED (Contact Us for New ids)",
+          "subject": "Test Email",
+          "body": "<p>Hello, World!</p>",
+          "recipient_list": ["recipient@example.com"],
+          "smtp_host": "smtp.example.com",
+          "smtp_port": 587,
+          "email_host_user": "your-email@example.com",
+          "email_host_password": "your-password",
+          "use_tls": True,
+          "use_ssl": False,
+          "attachments": [
+              {
+                  "filename": "document.pdf",
+                  "content": base64_content,
+                  "content_type": "application/pdf"
+              }
+          ]
+      }
+      
+      response = requests.post(url, json=payload)
+      
+      if response.status_code == 200:
+          print("Email sent successfully:", response.json())
+      else:
+          print("Error sending email:", response.status_code, response.text)</code></pre>
             </div>
           </div>
         </div>
       </section>
-
       <!-- Previous content remains the same until the key sections -->
 
 <section id="key-sections" class="py-20">
