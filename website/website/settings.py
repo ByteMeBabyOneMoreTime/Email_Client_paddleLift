@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'jet',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,11 +44,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'email_client',
     'cron',
-    'corsheaders',
+    
 ]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    # corrs Headers
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,7 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'email_client.middleware.NoRedirectOnOptionsMiddleware',
+    # whitenoise
 ]
 
 ROOT_URLCONF = 'website.urls'
@@ -138,7 +140,7 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False  # Optional, depending on the provider
 EMAIL_TIMEOUT = 10  # Timeout for email connections (optional)
 
-# JET_DEFAULT_THEME = 'light-violet'  # Available themes: 'default', 'light-gray', 'light-green', 'light-violet', 'light-blue'
+
 # Enable Gzip compression
 WHITENOISE_USE_FINDERS = True
 
@@ -147,27 +149,5 @@ WHITENOISE_MANIFEST_STRICT = False
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = True  # Set to True if you want to allow all origins
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True  
-
-CORS_ALLOW_METHODS = [
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
-]
-
-CORS_ALLOW_HEADERS = [
-    "accept",
-    "accept-encoding",
-    "authorization",
-    "content-type",
-    "dnt",
-    "origin",
-    "user-agent",
-    "x-csrftoken",
-    "x-requested-with",
-]
-

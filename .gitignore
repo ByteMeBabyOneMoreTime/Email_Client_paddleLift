@@ -1,0 +1,7 @@
+/env
+/website/.env
+/website/website/__pycache__
+/website/email_client/__pycache__
+/website/cron/__pycache__
+request_template
+/website/db.sqlite3
