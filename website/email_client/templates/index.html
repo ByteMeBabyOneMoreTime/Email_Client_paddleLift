@@ -368,7 +368,7 @@
 <code id="curl-example" class="language-bash">curl -X POST https://email.getsetdeployed.com/send \\
   -H "Content-Type: application/json" \\
   -d '{
-    "id": "your-email-id",
+    "id": "Id You Get From GETSETDEPLOYED (Contact Us for New ids)",
     "subject": "Test Email",
     "body": "<p>Hello, World!</p>",
     "recipient_list": ["recipient@example.com"],
@@ -402,7 +402,7 @@
 const sendEmail = async () => {
   try {
     const response = await axios.post("https://email.getsetdeployed.com/send", {
-      id: "your-email-id",
+      id: "Id You Get From GETSETDEPLOYED (Contact Us for New ids)",
       subject: "Test Email",
       body: "<p>Hello, World!</p>",
       recipient_list: ["recipient@example.com"],
@@ -443,7 +443,7 @@ sendEmail();</code></pre>
 url = "https://email.getsetdeployed.com/send"
 
 payload = {
-    "id": "your-email-id",
+    "id": "Id You Get From GETSETDEPLOYED (Contact Us for New ids)",
     "subject": "Test Email",
     "body": "<p>Hello, World!</p>",
     "recipient_list": ["recipient@example.com"],
